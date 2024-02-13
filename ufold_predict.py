@@ -305,7 +305,7 @@ def main():
               'num_workers': 6,
               'drop_last': True}
 
-    print("preparing to load data")
+    print("preparing to load model")
     test_set = Dataset_FCN(test_data)
     test_generator = data.DataLoader(test_set, **params)
     contact_net = FCNNet(img_ch=17)
