@@ -218,6 +218,7 @@ class RNASSDataGenerator_input(object):
         self.load_data()
 
     def load_data(self):
+        print('0')
         p = Pool()
         print('1')
         data_dir = self.data_dir
