@@ -3,7 +3,7 @@ import os
 import _pickle as cPickle
 import collections
 from ufold.utils import *
-from multiprocessing import Pool
+# from multiprocessing import Pool
 from torch.utils import data
 from collections import Counter
 from random import shuffle
@@ -30,7 +30,7 @@ class RNASSDataGenerator(object):
         self.batch_pointer = 0
 
     def load_data(self):
-        p = Pool()
+        # p = Pool()
         data_dir = self.data_dir
         # Load the current split
         RNA_SS_data = collections.namedtuple('RNA_SS_data', 
@@ -223,7 +223,7 @@ class RNASSDataGenerator_input(object):
 
     def load_data(self):
         print('0')
-        p = Pool()
+        # p = Pool()
         print('1')
         data_dir = self.data_dir
         print('2')
