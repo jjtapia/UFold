@@ -28,7 +28,6 @@ else:
 
 
 # Set standard output to unbuffered mode
-sys.stdout = os.fdopen(sys.stdout.fileno(), 'w', 0)
 
 
 def get_seq(contact):
@@ -273,12 +272,13 @@ def model_eval_all_test(contact_net,test_generator):
 
 def main():
     print('starting')
+    sys.stdout.flush()
     torch.multiprocessing.set_sharing_strategy('file_system')
     print('set filesystem')
     torch.cuda.set_device(0)
 
     print('Welcome using UFold prediction tool!!!')
-
+    sys.stdout.flush()
     if not os.path.exists('results/save_ct_file'):
         os.makedirs('results/save_ct_file')
     if not os.path.exists('results/save_varna_fig'):
@@ -301,10 +301,13 @@ def main():
     print("setting up")
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     print(f"Using device {device}")
+    sys.stdout.flush()
     seed_torch()
     print("seeded 2")
+    sys.stdout.flush()
     test_data = RNASSDataGenerator_input('data/', 'input')
     print("loaded data")
+    sys.stdout.flush()
     params = {'batch_size': BATCH_SIZE,
               'shuffle': True,
               'num_workers': 6,

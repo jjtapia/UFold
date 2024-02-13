@@ -225,27 +225,28 @@ class RNASSDataGenerator_input(object):
         print('0')
         # p = Pool()
         print('1')
+        sys.stdout.flush()
         data_dir = self.data_dir
         print('2')
-
+        sys.stdout.flush()
         RNA_SS_data = collections.namedtuple('RNA_SS_data',
                     'seq ss_label length name pairs')
         input_file = open(os.path.join(data_dir, '%s.txt' % self.split),'r').readlines()
         print('3')
-
+        sys.stdout.flush()
         self.data_name = np.array([itm.strip()[1:] for itm in input_file if itm.startswith('>')])
         print('4')
 
         self.seq = [itm.strip().upper().replace('T','U') for itm in input_file if itm.upper().startswith(('A','U','C','G','T'))]
         print('5')
-
+        sys.stdout.flush()
         self.len = len(self.seq)
         self.seq_length = np.array([len(item) for item in self.seq])
         print('6')
-
+        sys.stdout.flush()
         self.data_x = np.array([self.one_hot_600(item) for item in self.seq])
         print('7')
-
+        sys.stdout.flush()
         self.seq_max_len = 600
         self.data_y = self.data_x
 
