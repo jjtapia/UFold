@@ -293,22 +293,22 @@ def main():
     epoches_first = config.epoches_first
 
     MODEL_SAVED = 'models/ufold_train_alldata.pt'
-
+    print("setting up")
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-
+    print(f"Using device {device}")
     seed_torch()
-        
+    print("seeded")
     test_data = RNASSDataGenerator_input('data/', 'input')
-    
+    print("loaded data")
     params = {'batch_size': BATCH_SIZE,
               'shuffle': True,
               'num_workers': 6,
               'drop_last': True}
 
+    print("preparing to load data")
     test_set = Dataset_FCN(test_data)
     test_generator = data.DataLoader(test_set, **params)
     contact_net = FCNNet(img_ch=17)
-
     #pdb.set_trace()
     print('==========Start Loading Pretrained Model==========')
     contact_net.load_state_dict(torch.load(MODEL_SAVED,map_location='cuda:0'))
