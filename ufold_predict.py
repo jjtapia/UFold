@@ -311,7 +311,7 @@ def main():
 
     #pdb.set_trace()
     print('==========Start Loading Pretrained Model==========')
-    contact_net.load_state_dict(torch.load(MODEL_SAVED,map_location='cuda:1'))
+    contact_net.load_state_dict(torch.load(MODEL_SAVED,map_location='cuda:0'))
     print('==========Finish Loading Pretrained Model==========')
     # contact_net = nn.DataParallel(contact_net, device_ids=[3, 4])
     contact_net.to(device)
