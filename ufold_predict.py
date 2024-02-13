@@ -27,6 +27,9 @@ else:
     from ufold.postprocess import postprocess_new as postprocess
 
 
+# Set standard output to unbuffered mode
+sys.stdout = os.fdopen(sys.stdout.fileno(), 'w', 0)
+
 
 def get_seq(contact):
     seq = None
