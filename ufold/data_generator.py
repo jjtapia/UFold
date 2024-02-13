@@ -11,7 +11,7 @@ import torch
 from itertools import permutations, product
 import pdb
 from collections import defaultdict
-import sys
+
 import math
 
 perm = list(product(np.arange(4), np.arange(4)))
@@ -30,7 +30,7 @@ class RNASSDataGenerator(object):
         self.batch_pointer = 0
 
     def load_data(self):
-        # p = Pool()
+        p = Pool()
         data_dir = self.data_dir
         # Load the current split
         RNA_SS_data = collections.namedtuple('RNA_SS_data', 
@@ -149,7 +149,7 @@ class RNASSDataGenerator(object):
         return contact
 
     def next_batch_SL(self, batch_size):
-        # p = Pool()
+        p = Pool()
         bp = self.batch_pointer
         # This will return a smaller size if not sufficient
         # The user must pad the batch in an external API
@@ -213,40 +213,21 @@ class RNASSDataGenerator(object):
 
 class RNASSDataGenerator_input(object):
     def __init__(self,data_dir, split):
-        print('data 1')
         self.data_dir = data_dir
-        print('data 2')
         self.split = split
-        print('data 3')
-
         self.load_data()
 
     def load_data(self):
-        print('0')
-        # p = Pool()
-        print('1')
-        sys.stdout.flush()
+        p = Pool()
         data_dir = self.data_dir
-        print('2')
-        sys.stdout.flush()
         RNA_SS_data = collections.namedtuple('RNA_SS_data',
                     'seq ss_label length name pairs')
         input_file = open(os.path.join(data_dir, '%s.txt' % self.split),'r').readlines()
-        print('3')
-        sys.stdout.flush()
         self.data_name = np.array([itm.strip()[1:] for itm in input_file if itm.startswith('>')])
-        print('4')
-
         self.seq = [itm.strip().upper().replace('T','U') for itm in input_file if itm.upper().startswith(('A','U','C','G','T'))]
-        print('5')
-        sys.stdout.flush()
         self.len = len(self.seq)
         self.seq_length = np.array([len(item) for item in self.seq])
-        print('6')
-        sys.stdout.flush()
         self.data_x = np.array([self.one_hot_600(item) for item in self.seq])
-        print('7')
-        sys.stdout.flush()
         self.seq_max_len = 600
         self.data_y = self.data_x
 

@@ -314,17 +314,32 @@ def main():
               'drop_last': True}
 
     print("preparing to load model")
+    sys.stdout.flush()
     test_set = Dataset_FCN(test_data)
+
+    print('creating dataloader')
+    sys.stdout.flush()
     test_generator = data.DataLoader(test_set, **params)
+
+    print('creating contact net')
+    sys.stdout.flush()
     contact_net = FCNNet(img_ch=17)
     #pdb.set_trace()
+
     print('==========Start Loading Pretrained Model==========')
+    sys.stdout.flush()
+
     contact_net.load_state_dict(torch.load(MODEL_SAVED,map_location='cuda:0'))
     print('==========Finish Loading Pretrained Model==========')
+    sys.stdout.flush()
     # contact_net = nn.DataParallel(contact_net, device_ids=[3, 4])
     contact_net.to(device)
+    print('sending contact net')
+    sys.stdout.flush()
+
     model_eval_all_test(contact_net,test_generator)
     print('==========Done!!! Please check results folder for the predictions!==========')
+    sys.stdout.flush()
 
     
 if __name__ == '__main__':
