@@ -213,8 +213,12 @@ class RNASSDataGenerator(object):
 
 class RNASSDataGenerator_input(object):
     def __init__(self,data_dir, split):
+        print('data 1')
         self.data_dir = data_dir
+        print('data 2')
         self.split = split
+        print('data 3')
+
         self.load_data()
 
     def load_data(self):

@@ -297,7 +297,7 @@ def main():
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     print(f"Using device {device}")
     seed_torch()
-    print("seeded")
+    print("seeded 2")
     test_data = RNASSDataGenerator_input('data/', 'input')
     print("loaded data")
     params = {'batch_size': BATCH_SIZE,
