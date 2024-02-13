@@ -3,7 +3,7 @@ import os
 import _pickle as cPickle
 import collections
 from ufold.utils import *
-# from multiprocessing import Pool
+from multiprocessing import Pool
 from torch.utils import data
 from collections import Counter
 from random import shuffle
@@ -149,7 +149,7 @@ class RNASSDataGenerator(object):
         return contact
 
     def next_batch_SL(self, batch_size):
-        p = Pool()
+        # p = Pool()
         bp = self.batch_pointer
         # This will return a smaller size if not sufficient
         # The user must pad the batch in an external API
