@@ -305,21 +305,17 @@ def main():
     seed_torch()
     print("seeded 2")
     sys.stdout.flush()
-    test_data = RNASSDataGenerator_input('data/', 'input')
-    print("loaded data")
-    sys.stdout.flush()
     params = {'batch_size': BATCH_SIZE,
               'shuffle': True,
               'num_workers': 6,
               'drop_last': True}
 
-    print("preparing to load model")
-    sys.stdout.flush()
-    test_set = Dataset_FCN(test_data)
 
-    print('creating dataloader')
+    # Check the amount of memory currently in use on the GPU
+    allocated_memory = torch.cuda.memory_allocated()
+    print(f"Memory allocated on GPU: {allocated_memory / 1024**2} MB")
     sys.stdout.flush()
-    test_generator = data.DataLoader(test_set, **params)
+
 
     print('creating contact net')
     sys.stdout.flush()
@@ -329,7 +325,9 @@ def main():
     print('==========Start Loading Pretrained Model==========')
     sys.stdout.flush()
 
-    contact_net.load_state_dict(torch.load(MODEL_SAVED,map_location='cuda:0'))
+    torch.cuda.empty_cache() 
+
+    contact_net.load_state_dict(torch.load(MODEL_SAVED, map_location='cuda:0'))
     print('==========Finish Loading Pretrained Model==========')
     sys.stdout.flush()
     # contact_net = nn.DataParallel(contact_net, device_ids=[3, 4])
@@ -337,7 +335,23 @@ def main():
     print('sending contact net')
     sys.stdout.flush()
 
-    model_eval_all_test(contact_net,test_generator)
+    torch.cuda.empty_cache() 
+
+    ## loading data
+    test_data = RNASSDataGenerator_input('data/', 'input')
+    print("loaded data")
+    sys.stdout.flush()
+
+    print("preparing to load model")
+    sys.stdout.flush()
+    test_set = Dataset_FCN(test_data)
+
+    print('creating dataloader')
+    sys.stdout.flush()
+    test_generator = data.DataLoader(test_set, **params)
+
+
+    model_eval_all_test(contact_net, test_generator)
     print('==========Done!!! Please check results folder for the predictions!==========')
     sys.stdout.flush()
 
