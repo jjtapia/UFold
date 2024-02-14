@@ -310,7 +310,8 @@ def main():
               'num_workers': 6,
               'drop_last': True}
 
-
+    
+    torch.cuda.init()
     # Check the amount of memory currently in use on the GPU
     print(torch.cuda.memory_allocated(0) / 1024**2, "MB")  # Current allocated memory
     print(torch.cuda.max_memory_allocated(0) / 1024**2, "MB")  # Peak memory usage
@@ -328,8 +329,8 @@ def main():
     sys.stdout.flush()
 
     torch.cuda.empty_cache() 
-
-    contact_net.load_state_dict(torch.load(MODEL_SAVED, map_location='cuda:0'))
+    model = torch.load(MODEL_SAVED, map_location='cuda:0')
+    contact_net.load_state_dict(model)
     print('==========Finish Loading Pretrained Model==========')
     sys.stdout.flush()
     # contact_net = nn.DataParallel(contact_net, device_ids=[3, 4])
