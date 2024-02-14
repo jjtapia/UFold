@@ -312,8 +312,10 @@ def main():
 
 
     # Check the amount of memory currently in use on the GPU
-    allocated_memory = torch.cuda.memory_allocated()
-    print(f"Memory allocated on GPU: {allocated_memory / 1024**2} MB")
+    print(torch.cuda.memory_allocated(0) / 1024**2, "MB")  # Current allocated memory
+    print(torch.cuda.max_memory_allocated(0) / 1024**2, "MB")  # Peak memory usage
+    print(torch.cuda.memory_reserved(0) / 1024**2, "MB")  # Current reserved memory
+    print(torch.cuda.max_memory_reserved(0) / 1024**2, "MB")  # Peak memory reserved
     sys.stdout.flush()
 
 
