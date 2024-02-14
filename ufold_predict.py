@@ -275,7 +275,7 @@ def main():
     sys.stdout.flush()
     torch.multiprocessing.set_sharing_strategy('file_system')
     print('set filesystem')
-    torch.cuda.set_device(0)
+    torch.cuda.set_device(1)
 
     print('Welcome using UFold prediction tool!!!')
     sys.stdout.flush()
@@ -299,7 +299,7 @@ def main():
 
     MODEL_SAVED = 'models/ufold_train_alldata.pt'
     print("setting up")
-    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    device = torch.device("cuda:1" if torch.cuda.is_available() else "cpu")
     print(f"Using device {device}")
     sys.stdout.flush()
     seed_torch()
@@ -310,7 +310,7 @@ def main():
               'num_workers': 6,
               'drop_last': True}
 
-    
+    print('init')
     torch.cuda.init()
     # Check the amount of memory currently in use on the GPU
     print(torch.cuda.memory_allocated(0) / 1024**2, "MB")  # Current allocated memory
@@ -329,7 +329,7 @@ def main():
     sys.stdout.flush()
 
     torch.cuda.empty_cache() 
-    model = torch.load(MODEL_SAVED, map_location='cuda:0')
+    model = torch.load(MODEL_SAVED, map_location='cuda:1')
     contact_net.load_state_dict(model)
     print('==========Finish Loading Pretrained Model==========')
     sys.stdout.flush()
