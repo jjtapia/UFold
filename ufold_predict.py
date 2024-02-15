@@ -276,6 +276,7 @@ def main():
     torch.multiprocessing.set_sharing_strategy('file_system')
     print('set filesystem')
     torch.cuda.set_device(0)
+    print(torch.cuda.device_count(), torch.version.cuda, torch.cuda.is_available())
 
     print('Welcome using UFold prediction tool!!!')
     sys.stdout.flush()
