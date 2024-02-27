@@ -300,26 +300,17 @@ def main():
     epoches_first = config.epoches_first
 
     MODEL_SAVED = 'models/ufold_train_alldata.pt'
-    print("setting up")
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-    print(f"Using device {device}")
     sys.stdout.flush()
     seed_torch()
-    print("seeded 2")
     sys.stdout.flush()
     params = {'batch_size': BATCH_SIZE,
               'shuffle': True,
               'num_workers': 6,
               'drop_last': True}
 
-    print('init')
-    print(torch.__version__)
     torch.cuda.init()
     # Check the amount of memory currently in use on the GPU
-    print(torch.cuda.memory_allocated(0) / 1024**2, "MB")  # Current allocated memory
-    print(torch.cuda.max_memory_allocated(0) / 1024**2, "MB")  # Peak memory usage
-    print(torch.cuda.memory_reserved(0) / 1024**2, "MB")  # Current reserved memory
-    print(torch.cuda.max_memory_reserved(0) / 1024**2, "MB")  # Peak memory reserved
     sys.stdout.flush()
 
 
@@ -352,7 +343,7 @@ def main():
     sys.stdout.flush()
     test_set = Dataset_FCN(test_data)
 
-    print('creating dataloader')
+    print('creating dataloader...')
     sys.stdout.flush()
     test_generator = data.DataLoader(test_set, **params)
 
