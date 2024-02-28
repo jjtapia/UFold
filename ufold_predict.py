@@ -306,7 +306,7 @@ def main():
     sys.stdout.flush()
     params = {'batch_size': BATCH_SIZE,
               'shuffle': True,
-              'num_workers': 6,
+              'num_workers': 2,
               'drop_last': True}
 
     torch.cuda.init()
