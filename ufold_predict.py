@@ -271,13 +271,10 @@ def model_eval_all_test(contact_net,test_generator):
     '''
 
 def main():
-    print('starting')
     sys.stdout.flush()
     torch.multiprocessing.set_start_method('spawn')
     torch.multiprocessing.set_sharing_strategy('file_system')
-    print('set filesystem')
     torch.cuda.set_device(0)
-    print(torch.cuda.device_count(), torch.version.cuda, torch.cuda.is_available())
 
     print('Welcome using UFold prediction tool!!!')
     sys.stdout.flush()
@@ -306,7 +303,7 @@ def main():
     sys.stdout.flush()
     params = {'batch_size': BATCH_SIZE,
               'shuffle': True,
-              'num_workers': 2,
+              'num_workers': 0,
               'drop_last': True}
 
     torch.cuda.init()
