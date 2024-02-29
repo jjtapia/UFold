@@ -168,6 +168,7 @@ def model_eval_all_test(contact_net,test_generator):
         #if batch_n-1 in rep_ind:
         #    continue
         #contacts_batch = torch.Tensor(contacts.float()).to(device)
+
         seq_embedding_batch = torch.Tensor(seq_embeddings.float()).to(device)
         seq_ori = torch.Tensor(seq_ori.float()).to(device)
         # matrix_reps_batch = torch.unsqueeze(
@@ -201,15 +202,18 @@ def model_eval_all_test(contact_net,test_generator):
             seq_name = [seq_name[0][1:]]
         seq_names.append(seq_name[0].replace('/','_'))
         #ct_dict_all,dot_file_dict = get_ct_dict_fast(map_no_train,batch_n,ct_dict_all,dot_file_dict,seq_ori.cpu().squeeze(),seq_name[0])
-        ct_dict_all,dot_file_dict,tertiary_bp = get_ct_dict_fast(map_no_train,batch_n,ct_dict_all,dot_file_dict,seq_ori.cpu().squeeze(),seq_name[0])
+        ct_dict_all, dot_file_dict, tertiary_bp = get_ct_dict_fast(map_no_train,batch_n,ct_dict_all,dot_file_dict,seq_ori.cpu().squeeze(),seq_name[0])
+
         #ct_dict_all,dot_file_dict = get_ct_dict_fast((contacts>0.5).float(),batch_n,ct_dict_all,dot_file_dict,seq_ori.cpu().squeeze(),seq_name[0])
         ## draw plot section
-        if not args.nc:
-            subprocess.Popen(["java", "-cp", "VARNAv3-93.jar", "fr.orsay.lri.varna.applications.VARNAcmd", '-i', 'results/save_ct_file/' + seq_name[0].replace('/','_') + '.ct', '-o', 'results/save_varna_fig/' + seq_name[0].replace('/','_') + '_radiate.png', '-algorithm', 'radiate', '-resolution', '8.0', '-bpStyle', 'lw'], stderr=subprocess.STDOUT, stdout=subprocess.PIPE).communicate()[0]
-        else:
-            subprocess.Popen(["java", "-cp", "VARNAv3-93.jar", "fr.orsay.lri.varna.applications.VARNAcmd", '-i', 'results/save_ct_file/' + seq_name[0].replace('/','_') + '.ct', '-o', 'results/save_varna_fig/' + seq_name[0].replace('/','_') + '_radiatenew.png', '-algorithm', 'radiate', '-resolution', '8.0', '-bpStyle', 'lw','-auxBPs', tertiary_bp], stderr=subprocess.STDOUT, stdout=subprocess.PIPE).communicate()[0]
+        # if not args.nc:
+        #     subprocess.Popen(["java", "-cp", "VARNAv3-93.jar", "fr.orsay.lri.varna.applications.VARNAcmd", '-i', 'results/save_ct_file/' + seq_name[0].replace('/','_') + '.ct', '-o', 'results/save_varna_fig/' + seq_name[0].replace('/','_') + '_radiate.png', '-algorithm', 'radiate', '-resolution', '8.0', '-bpStyle', 'lw'], stderr=subprocess.STDOUT, stdout=subprocess.PIPE).communicate()[0]
+        # else:
+        #     subprocess.Popen(["java", "-cp", "VARNAv3-93.jar", "fr.orsay.lri.varna.applications.VARNAcmd", '-i', 'results/save_ct_file/' + seq_name[0].replace('/','_') + '.ct', '-o', 'results/save_varna_fig/' + seq_name[0].replace('/','_') + '_radiatenew.png', '-algorithm', 'radiate', '-resolution', '8.0', '-bpStyle', 'lw','-auxBPs', tertiary_bp], stderr=subprocess.STDOUT, stdout=subprocess.PIPE).communicate()[0]
+
         #subprocess.Popen(["java", "-cp", "VARNAv3-93.jar", "fr.orsay.lri.varna.applications.VARNAcmd", '-i', 'results/save_ct_file/' + seq_name[0].replace('/','_') + '.ct', '-o', 'results/save_varna_fig/' + seq_name[0].replace('/','_') + '_radiate_ground_truth.png', '-algorithm', 'radiate', '-resolution', '8.0', '-bpStyle', 'lw'], stderr=subprocess.STDOUT, stdout=subprocess.PIPE).communicate()[0]
         #subprocess.Popen(["java", "-cp", "VARNAv3-93.jar", "fr.orsay.lri.varna.applications.VARNAcmd", '-i', 'results/save_ct_file/' + seq_name[0].replace('/','_') + '.ct', '-o', 'results/save_varna_fig/' + seq_name[0].replace('/','_') + '_radiate_ground_truthnew.png', '-algorithm', 'naview', '-resolution', '18.0', '-bpStyle', 'lw','-auxBPs', tertiary_bp], stderr=subprocess.STDOUT, stdout=subprocess.PIPE).communicate()[0]
+
         #pdb.set_trace()
         '''
         result_no_train_tmp = list(map(lambda i: evaluate_exact(map_no_train.cpu()[i],
@@ -223,8 +227,9 @@ def model_eval_all_test(contact_net,test_generator):
 
     #pdb.set_trace()
     
-    ct_file_name_list = ['results/save_ct_file/'+item+'.ct' for item in seq_names]
-    subprocess.getstatusoutput('sed -s \'$G\' '+' '.join(ct_file_name_list)+' > results/save_ct_file/ct_file_merge.ct')
+    # ct_file_name_list = ['results/save_ct_file/'+item+'.ct' for item in seq_names]
+    # subprocess.getstatusoutput('sed -s \'$G\' '+' '.join(ct_file_name_list)+' > results/save_ct_file/ct_file_merge.ct')
+
     #dot_ct_file = open('results/dot_ct_file.txt','w')
     dot_ct_file = open('results/input_dot_ct_file.txt','w')
     for i in range(batch_n):
