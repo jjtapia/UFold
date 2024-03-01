@@ -239,10 +239,10 @@ class RNASSDataGenerator_input(object):
                 [[(bases == base.upper()).astype(int)] if str(base).upper() in BASES else np.array([[-1] * len(BASES)]) for base
                 in RNN_seq])
         if len(seq_item) <= 600:
-            one_hot_matrix_600 = np.zeros((600,4))
+            one_hot_matrix_600 = np.zeros((600, 4))
         else:
-            one_hot_matrix_600 = np.zeros((600,4))
-            # one_hot_matrix_600 = np.zeros((len(seq_item),4))
+            # one_hot_matrix_600 = np.zeros((600,4))
+            one_hot_matrix_600 = np.zeros((len(seq_item), 4))
         one_hot_matrix_600[:len(seq_item),] = feat
         return one_hot_matrix_600
 
