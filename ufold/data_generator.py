@@ -227,6 +227,7 @@ class RNASSDataGenerator_input(object):
         self.seq = [itm.strip().upper().replace('T','U') for itm in input_file if itm.upper().startswith(('A','U','C','G','T'))]
         self.len = len(self.seq)
         self.seq_length = np.array([len(item) for item in self.seq])
+        print(f'num: {self.len} length: {self.seq_length} name: {self.data_name}')
         self.data_x = np.array([self.one_hot_600(item) for item in self.seq])
         self.seq_max_len = 600
         self.data_y = self.data_x
